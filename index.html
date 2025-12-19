@@ -5,366 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMESH</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #0f0f1e;
-            color: #e0e0e0;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        #particles {
-            position: fixed;
-            top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(226, 43, 217, 0.8), transparent);
-            animation: float linear infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(-100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) scale(1);
-                opacity: 0;
-            }
-        }
-
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(15, 15, 30, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
-        }
-
-        .nav-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #8a2be2, #ff1493);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #e0e0e0;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            color: #8a2be2;
-        }
-
-        .hero {
-            margin-top: 80px;
-            padding: 8rem 2rem 6rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .hero-content {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 4.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #8a2be2, #ff1493, #00bfff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .tagline {
-            font-size: 1.5rem;
-            color: #ffffff;
-            margin-bottom: 1rem;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: #ffffff;
-            margin-bottom: 3rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #8a2be2, #ff1493);
-            color: white;
-            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.6);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #8a2be2;
-            border: 2px solid #8a2be2;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(138, 43, 226, 0.1);
-            transform: translateY(-3px);
-        }
-
-        .features {
-            padding: 6rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 4rem;
-            background: linear-gradient(135deg, #8a2be2, #ff1493);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .feature-card {
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(35, 35, 60, 0.6));
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(138, 43, 226, 0.2);
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(255, 20, 147, 0.1));
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(138, 43, 226, 0.6);
-            box-shadow: 0 20px 60px rgba(138, 43, 226, 0.3);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-            background: linear-gradient(135deg, #8a2be2, #ff1493);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .feature-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: #fff;
-            position: relative;
-            z-index: 1;
-        }
-
-        .feature-card p {
-            color: #b0b0b0;
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-
-        .creators {
-            padding: 6rem 2rem;
-            background: rgba(26, 26, 46, 0.5);
-        }
-
-        .creators-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .creators-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .creator-card {
-            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(255, 20, 147, 0.1));
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(138, 43, 226, 0.3);
-            transition: all 0.3s;
-        }
-
-        .creator-card:hover {
-            transform: scale(1.05);
-            border-color: rgba(138, 43, 226, 0.6);
-        }
-
-        .creator-avatar {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #8a2be2, #ff1493);
-            border-radius: 50%;
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            color: white;
-        }
-
-        footer {
-            padding: 3rem 2rem;
-            text-align: center;
-            border-top: 1px solid rgba(138, 43, 226, 0.3);
-            color: #808080;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 3rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 </head>
 <body>
-    <div id="particles"></div>
+    <canvas id="particles-canvas"></canvas>
     
     <div class="content-wrapper">
         <nav class="navbar">
             <div class="nav-content">
-                <div class="logo">CMESH (Crafted's Multimedia Edge Services Hub)</div>
+                <div class="logo">
+                    <div class="logo-main">CMESH</div>
+                    <div class="logo-sub">Crafted's Multimedia Edge Services Hub</div>
+                </div>
                 <ul class="nav-links">
                     <li><a href="#features">Features</a></li>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#docs">Docs</a></li>
                 </ul>
             </div>
         </nav>
@@ -373,10 +30,9 @@
             <div class="hero-content">
                 <h1>CMESH</h1>
                 <p class="tagline">Crafted's Multimedia Edge Services Hub</p>
-                <p class="subtitle">Your all-in-one solution for embedding, proxying, CDN services, and multimedia delivery at the edge</p>
+                <p class="subtitle">Your all-in-one solution for embedding games, proxying sites, CDN services, and multimedia delivery for Proxy and UBG site developers alike.</p>
                 <div class="cta-buttons">
-                    <a href="#" class="btn btn-primary">Get Started</a>
-                    <a href="#" class="btn btn-secondary">View Documentation</a>
+                    <a href="https://dashboard.cmesh.dev" class="btn btn-primary">Get Started</a>
                 </div>
             </div>
         </section>
@@ -386,50 +42,32 @@
             <div class="feature-grid">
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-photo-video"></i></div>
-                    <h3>Media Embedding</h3>
-                    <p>Seamlessly embed videos, images, and multimedia content with optimized delivery and automatic format conversion for any platform.</p>
+                    <h3>Game Embedding</h3>
+                    <p>Seamlessly embed lots of games to your UBG site or Proxy.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-film"></i></div>
+                    <h3>Movie Embedding</h3>
+                    <p>Seamlessly embed tones of movies to your UBG site or Proxy.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
                     <h3>Smart Proxy</h3>
-                    <p>Advanced proxy services with caching, load balancing, and intelligent routing for maximum performance and security.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-                    <h3>Global CDN</h3>
-                    <p>Lightning-fast content delivery with edge caching across multiple continents, ensuring minimal latency for all users.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-download"></i></div>
-                    <h3>Download Manager</h3>
-                    <p>Powerful download acceleration with resume support, batch operations, and format conversion on-the-fly.</p>
+                    <p>Static-hostsable Proxy for static sites.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-server"></i></div>
                     <h3>Self-Hosting</h3>
-                    <p>Deploy CMESH on your own infrastructure with Docker, Kubernetes, or bare metal. Full control, zero vendor lock-in.</p>
+                    <p>Embedding doesnt tickle your fancy? Deploy CMESH products on your site by downloading our services.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
                     <h3>Analytics Dashboard</h3>
-                    <p>Real-time insights into your traffic, bandwidth usage, cache hit rates, and performance metrics with detailed reporting.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-code"></i></div>
-                    <h3>API-First Design</h3>
-                    <p>Comprehensive REST API with SDKs for major languages. Integrate CMESH into your workflow with ease.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
-                    <h3>Security & Privacy</h3>
-                    <p>End-to-end encryption, DDoS protection, access controls, and compliance with major privacy regulations.</p>
+                    <p>Real-time insights into your traffic, clicks, etc.</p>
                 </div>
             </div>
         </section>
@@ -437,53 +75,17 @@
         <section id="about" class="creators">
             <div class="creators-content">
                 <h2 class="section-title">About CMESH</h2>
-                <p style="max-width: 800px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8; color: #b0b0b0;">
-                    CMESH is a next-generation multimedia edge services platform designed to simplify content delivery, 
-                    proxying, and media management. Built with modern web standards and optimized for performance, 
-                    CMESH provides developers and businesses with the tools they need to deliver exceptional multimedia 
-                    experiences at scale. Whether you're hosting on our cloud infrastructure or deploying on your own servers, 
-                    CMESH adapts to your needs.
+                <p style="max-width: 800px; margin: 0 auto; font-size: 1.2rem; line-height: 1.8; color: #b3e5fc;">
+                    CMESH is a multimedia edge services platform designed to simplify making Proxies and UBG sites. Whether you're hosting the smallest proxy, or biggest UBG site, we got you.
                 </p>
             </div>
         </section>
 
         <footer>
-            <p>&copy; 2024 CMESH - Crafted's Multimedia Edge Services Hub. All rights reserved.</p>
-            <p style="margin-top: 1rem; font-size: 0.9rem;">Open Source • MIT License • Built with <i class="fas fa-heart" style="color: #ff1493;"></i></p>
+            <p>&copy; 2025 CMESH - Crafted's Multimedia Edge Services Hub. All rights reserved.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">ARR License • Built with <i class="fas fa-heart"></i> by Crafted</p>
         </footer>
     </div>
-
-    <script>
-        // Particle background
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 50;
-
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            const size = Math.random() * 12 + 6;
-            const startX = Math.random() * 100;
-            const duration = Math.random() * 15 + 10;
-            const delay = Math.random() * 5;
-            
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            particle.style.left = `${startX}%`;
-            particle.style.animationDuration = `${duration}s`;
-            particle.style.animationDelay = `${delay}s`;
-            
-            particlesContainer.appendChild(particle);
-            
-            setTimeout(() => {
-                particle.remove();
-                createParticle();
-            }, (duration + delay) * 1000);
-        }
-
-        for (let i = 0; i < particleCount; i++) {
-            setTimeout(() => createParticle(), i * 100);
-        }
-    </script>
+<script src="script.js"></script>
 </body>
 </html>
